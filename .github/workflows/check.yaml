@@ -1,0 +1,76 @@
+name: check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions-rs/cargo@v1
+
+    - name: Select Rust channel
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
+    - name: Test All
+      run: cargo test
+
+  lint:
+    name: "Clippy"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Select Rust channel
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+    - name: Check linting
+      uses: actions-rs/clippy-check@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        args: --all-features
+
+    - name: Check formatting
+      run: cargo fmt -- --check
+
+  loom:
+    name: "Loom"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions-rs/cargo@v1
+
+    - name: Select Rust channel
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: stable
+
+    - name: Test All
+      run: cargo test --features loom
+
+  miri:
+    name: "Miri"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Miri
+        run: |
+          rustup toolchain install nightly --component miri
+          rustup override set nightly
+          cargo miri setup
+      - name: Test with Miri
+        run: cargo miri test

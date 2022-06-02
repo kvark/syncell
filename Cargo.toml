@@ -3,7 +3,10 @@ name = "syncell"
 description = "Sync alternative to RefCell"
 license = "MIT"
 homepage = "https://github.com/kvark/syncell"
-version = "0.0.1"
+version = "0.1.0"
 edition = "2021"
+keywords = ["cell"]
+categories = ["concurrency"]
 
 [dependencies]
+loom = { version = "0.5", optional = true }
