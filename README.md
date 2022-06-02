@@ -2,8 +2,7 @@
 [![Crates.io](https://img.shields.io/crates/v/syncell.svg?label=syncell)](https://crates.io/crates/syncell)
 [![Docs.rs](https://docs.rs/syncell/badge.svg)](https://docs.rs/syncell)
 [![Build Status](https://github.com/kvark/syncell/workflows/check/badge.svg)](https://github.com/kvark/syncell/actions)
-![MSRV](https://img.shields.io/badge/rustc-1.56+-blue.svg)
-[![codecov.io](https://codecov.io/gh/kvark/syncell/branch/main/graph/badge.svg)](https://codecov.io/gh/kvark/syncell)
+[![CodeCov.io](https://codecov.io/gh/kvark/syncell/branch/main/graph/badge.svg)](https://codecov.io/gh/kvark/syncell)
 
 Just a `Sync` alternative to `std::cell::RefCell`. Useful when you have a value to share between tasks/closures,
 and you already know or guarantee that the access to the value is safe (for example, via [choir task](https://github.com/kvark/choir) dependencies).
