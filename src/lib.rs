@@ -71,6 +71,12 @@ pub struct SynCell<T> {
 
 unsafe impl<T> Sync for SynCell<T> {}
 
+impl<T: Default> Default for SynCell<T> {
+    fn default() -> Self {
+        Self::new(T::default())
+    }
+}
+
 impl<T> SynCell<T> {
     /// Create a new cell.
     pub fn new(value: T) -> Self {
